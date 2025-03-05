@@ -25,7 +25,6 @@ import java.io.IOException
  * @since 04 January 2019
  */
 class ImagePickerActivity : AppCompatActivity() {
-
     companion object {
         private const val TAG = "image_picker"
 
@@ -85,6 +84,7 @@ class ImagePickerActivity : AppCompatActivity() {
      */
     private fun restoreInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
+            @Suppress("DEPRECATION")
             mImageUri = savedInstanceState.getParcelable(STATE_IMAGE_URI) as Uri?
         }
     }
@@ -113,24 +113,28 @@ class ImagePickerActivity : AppCompatActivity() {
         // Retrieve Image Provider
 
         // Create Gallery/Camera Provider
+        @Suppress("DEPRECATION")
         when (intent?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PROVIDER) as ImageProvider?) {
             ImageProvider.GALLERY -> {
                 mGalleryProvider = GalleryProvider(this) { galleryLauncher.launch(it) }
                 // Pick Gallery Image
                 savedInstanceState ?: mGalleryProvider?.startIntent()
             }
+
             ImageProvider.CAMERA -> {
                 mCameraProvider = CameraProvider(this, false) { cameraLauncher.launch(it) }
                 mCameraProvider?.onRestoreInstanceState(savedInstanceState)
                 // Pick Camera Image
                 savedInstanceState ?: mCameraProvider?.startIntent()
             }
+
             ImageProvider.FRONT_CAMERA -> {
                 mCameraProvider = CameraProvider(this, true) { cameraLauncher.launch(it) }
                 mCameraProvider?.onRestoreInstanceState(savedInstanceState)
                 // Try Pick Front Camera Image
                 savedInstanceState ?: mCameraProvider?.startIntent()
             }
+
             else -> {
                 // Something went Wrong! This case should never happen
                 Log.e(TAG, "Image provider can not be null")
@@ -169,10 +173,12 @@ class ImagePickerActivity : AppCompatActivity() {
                 isMultipleFiles = false,
                 outputFormat = mCropProvider.outputFormat()
             )
+
             mCompressionProvider.isResizeRequired(uri) -> mCompressionProvider.compress(
                 uri = uri,
                 outputFormat = mCropProvider.outputFormat()
             )
+
             else -> setResult(uri)
         }
     }
@@ -180,7 +186,7 @@ class ImagePickerActivity : AppCompatActivity() {
     fun setMultipleImage(fileList: ArrayList<Uri>) {
         this.fileToCrop = fileList
 
-        if (!fileList.isNullOrEmpty()) {
+        if (fileList.isNotEmpty()) {
             val file = fileList[0]
             setMultipleCropper(uri = file)
             try {
@@ -202,6 +208,7 @@ class ImagePickerActivity : AppCompatActivity() {
                 isMultipleFiles = true,
                 outputFormat = mCropProvider.outputFormat()
             )
+
             mCompressionProvider.isResizeRequired(uri) -> mCompressionProvider.compress(
                 uri = uri,
                 outputFormat = mCropProvider.outputFormat()
@@ -263,7 +270,6 @@ class ImagePickerActivity : AppCompatActivity() {
         mCropUri?.path?.let {
             File(it).delete()
         }
-        mCropUri = null
 
         setResult(mCropUri!!)
     }
@@ -307,5 +313,4 @@ class ImagePickerActivity : AppCompatActivity() {
         setResult(ImagePicker.RESULT_ERROR, intent)
         finish()
     }
-
 }

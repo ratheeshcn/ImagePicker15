@@ -13,6 +13,7 @@ import com.github.drjacky.imagepicker.util.FileUriUtils
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import androidx.core.graphics.scale
 
 /**
  * Compress Selected/Captured Image
@@ -81,9 +82,9 @@ class CompressionProvider(activity: ImagePickerActivity) : BaseProvider(activity
                     height = maxHeight
                     width = (bitmap.width / ratio).toInt()
                 }
-                Bitmap.createScaledBitmap(bitmap, width, height, true)
+                bitmap.scale(width, height)
             } else {
-                Bitmap.createScaledBitmap(bitmap, maxWidth, maxHeight, true)
+                bitmap.scale(maxWidth, maxHeight)
             }
         }
 
