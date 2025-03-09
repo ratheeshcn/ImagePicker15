@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.github.drjacky.imagepicker.sample.MainActivity"
+            android:name="io.github.catlandor.imagepicker.sample.MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

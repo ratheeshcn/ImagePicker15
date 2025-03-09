@@ -33,7 +33,7 @@ android {
     lintOptions{
         disable 'MissingTranslation'
     }
-    namespace 'com.github.drjacky.imagepicker'
+    namespace 'io.github.catlandor.imagepicker'
 
 }
 
@@ -58,37 +58,34 @@ dependencies {
 }
 
 ext {
-    PUBLISH_GROUP_ID = 'com.github.Drjacky'
+    PUBLISH_GROUP_ID = 'io.github.catlandor'
     PUBLISH_VERSION = rootProject.ext.versionName
     PUBLISH_ARTIFACT_ID = 'ImagePicker'
 
     bintrayRepo = 'ImagePicker'
     bintrayName = 'ImagePicker'
 
-    publishedGroupId = 'com.github.Drjacky'
+    publishedGroupId = 'io.github.catlandor'
     libraryName = 'ImagePicker'
     artifact = 'ImagePicker'
 
     libraryDescription = 'Pick image from Gallery or Capture new image with Camera.'
 
-    siteUrl = 'https://github.com/Drjacky/ImagePicker'
-    issueUrl = 'https://github.com/Drjacky/ImagePicker/issues'
-    gitUrl = 'https://github.com/Drjacky/ImagePicker.git'
+    siteUrl = 'https://github.com/Catlandor/ImagePicker'
+    issueUrl = 'https://github.com/Catlandor/ImagePicker/issues'
+    gitUrl = 'https://github.com/Catlandor/ImagePicker.git'
 
     libraryVersion = rootProject.ext.versionName
 
-    developerId = 'drjacky'
-    developerName = 'Hossein Abbasi'
-    developerEmail = 'dr.jacky.2005@gmail.com'
+    developerId = 'catlandor'
+    developerEmail = 'catlandor.dev@gmail.com'
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
 
-    gitRepo = 'Drjacky/ImagePicker' //Optional Github repository
+    gitRepo = 'Catlandor/ImagePicker' //Optional Github repository
     readmeName = 'CHANGELOG.md' //Optional Github readme file
 }
 
-// apply from: 'https://raw.githubusercontent.com/Drjacky/ImagePicker/master/bintray-install.gradle'
-// apply from: 'https://raw.githubusercontent.com/Drjacky/ImagePicker/master/bintray.gradle'
 apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"

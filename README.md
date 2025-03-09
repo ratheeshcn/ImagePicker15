@@ -1,33 +1,40 @@
-# 📸Image Picker Library for Android
+# 📸 Image Picker Library for Android
 
-[![Releases](https://img.shields.io/github/release/drjacky/imagePicker/all.svg?style=flat-square)](https://github.com/drjacky/ImagePicker/releases)
-[![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
+Migration of repository in progress: Check back later!
+
+Planned features:
+
+- Fully support the newest Android API level (API Level 35)
+- Switch uCrop library, since the initial one seems to be stale
+
+[![Java CI with Gradle](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml)
+[![Releases](https://img.shields.io/github/release/catlandor/imagePicker/all.svg?style=flat-square)](https://github.com/catlandor/ImagePicker/releases)
+[![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
 ![Language](https://img.shields.io/badge/language-Kotlin-orange.svg)
-[![PRWelcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Drjacky/ImagePicker/pulls)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDrjacky%2FImagePicker.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDrjacky%2FImagePicker?ref=badge_shield)
+[![PRWelcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/catlandor/ImagePicker/pulls)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ImagePicker-green.svg?style=flat)](https://android-arsenal.com/details/1/8208)
-![Language](https://img.shields.io/badge/Kotlin-1.7.21-blue)
+![KotlinVersion](https://kotlin-version.aws.icerock.dev/kotlin-version?group=io.github.catlandor&name=imagepicker)
 
 Easy to use and configurable library to **Pick an image from the Gallery or Capture image using Camera**. It also allows to **Crop the Image based on Aspect Ratio, Resolution and Image Size**.
 
-## ‍🏍Features
+## 👾 Features
 
-* Pick Gallery Images
-* Pick Images from Google Drive
-* Capture Camera Image
-* Crop Images(Crop image based on provided aspect ratio or let user choose one)
-* Compress Images(Compress image based on provided resolution and size)
-* Retrieve Image Result as File, File Path as String or Uri object
-* Handle Runtime Permission for Camera and Storage
+* Choose and pick from your gallery images
+* Pick images from the Google Drive
+* Capture camera images
+* Crop images (crop image based on provided aspect ratio or let the user choose)
+* Compress images (compress image based on provided resolution and size)
+* Retrieve image result as file, file Path as String or Uri object
+* Handle runtime permission for camera and storage
 
-## 🎬Preview
+## 🎬 Preview
 
 
-   Profile Image Picker    |         Gallery Only      |       Camera Only        |
-:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/Drjacky/ImagePicker/blob/master/art/imagepicker_profile_demo.gif)  |  ![](https://github.com/Drjacky/ImagePicker/blob/master/art/imagepicker_gallery_demo.gif)  |  ![](https://github.com/Drjacky/ImagePicker/blob/master/art/imagepicker_camera_demo.gif)
+|                                   Profile Image Picker                                   |                                       Gallery Only                                       |                                       Camera Only                                       |
+|:----------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:|
+| ![](https://github.com/Drjacky/ImagePicker/blob/master/art/imagepicker_profile_demo.gif) | ![](https://github.com/Drjacky/ImagePicker/blob/master/art/imagepicker_gallery_demo.gif) | ![](https://github.com/Drjacky/ImagePicker/blob/master/art/imagepicker_camera_demo.gif) |
 
-## 💻Usage
+## 💻 Usage
 
 
 Gradle dependency:
@@ -42,13 +49,13 @@ Gradle dependency:
 ```
 
 ```groovy
-   implementation 'com.github.Drjacky:ImagePicker:$libVersion'
+   implementation 'io.github.catlandor:ImagePicker:$libVersion'
 ```
 
 Where `$libVersion`
 = [![libVersion](https://img.shields.io/github/release/drjacky/imagePicker/all.svg?style=flat-square)](https://github.com/drjacky/ImagePicker/releases)
 
-## 🎨Customization
+## 🎨 Customization
 
 **If you want to get the activity result:**
 
@@ -220,16 +227,17 @@ ImagePicker.with(this)
     </resources>
 ```
 
-## 💥Compatibility
+## 💥 Compatibility
 
-  * Library - Android Kitkat 4.4+ (API 19)
-  * Sample - Android Kitkat 4.4+ (API 19)
+  * Library - Android Lollipop (API 21)
+  * Sample - Android Lollipop (API 21)
 
 ## 📃 Libraries Used
 * uCrop [https://github.com/Yalantis/uCrop](https://github.com/Yalantis/uCrop)
 * Compressor [https://github.com/zetbaitsu/Compressor](https://github.com/zetbaitsu/Compressor)
-* ImagePicker [https://github.com/Dhaval2404/ImagePicker](https://github.com/Dhaval2404/ImagePicker) which my work is based on this repository.
+* ImagePicker original repository [https://github.com/Dhaval2404/ImagePicker](https://github.com/Dhaval2404/ImagePicker)
+* ImagePicker fork, on which this fork is based on [https://github.com/Drjacky/ImagePicker](https://github.com/Drjacky/ImagePicker)
 
 ## License
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDrjacky%2FImagePicker.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FDrjacky%2FImagePicker?ref=badge_large)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
