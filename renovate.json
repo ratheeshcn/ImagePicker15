@@ -1,0 +1,37 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "group:all",
+    ":dependencyDashboard"
+  ],
+  "rebaseWhen": "behind-base-branch",
+  "packageRules": [
+    {
+      "description": "Use a specific registry URL for specific dependencies",
+      "matchPackageNames": [
+        "com.github.yalantis:ucrop",
+		"org.codehaus.groovy.modules.http-builder:http-builder"
+      ],
+      "registryUrls": [
+        "https://jitpack.io",
+		"https://repo.grails.org/grails/core/"
+      ]
+    },
+    {
+      "description": "Group patch or minor updates together and automerge if tests pass",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "addLabels": [
+        "non-major"
+      ],
+      "groupName": "non-major packages",
+      "automerge": true,
+      "matchPackageNames": [
+        "*"
+      ]
+    }
+  ]
+}
