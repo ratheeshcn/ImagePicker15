@@ -30,7 +30,7 @@ android {
     compileSdk 35
     defaultConfig {
         signingConfig signingConfigs.debug
-        applicationId "com.github.drjacky.imagepicker.sample"
+        applicationId "io.github.catlandor.imagepicker.sample"
         minSdkVersion 21
         targetSdkVersion 35
         multiDexEnabled true
@@ -69,7 +69,7 @@ android {
     lintOptions{
         disable 'MissingTranslation'
     }
-    namespace 'com.github.drjacky.imagepicker.sample'
+    namespace 'io.github.catlandor.imagepicker.sample'
 }
 
 dependencies {
