@@ -16,7 +16,6 @@ artifacts {
     archives androidSourcesJar
 }
 
-
 group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION
 
@@ -37,9 +36,9 @@ if (secretPropsFile.exists()) {
 } else {
     ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID')
     ext["signing.password"] = System.getenv('SIGNING_PASSWORD')
-    ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
-    ext["ossrhUsername"] = System.getenv('OSSRH_USERNAME')
-    ext["ossrhPassword"] = System.getenv('OSSRH_PASSWORD')
+    ext["signing.secretKeyRingFile"] = System.getenv('GPG_KEY_CONTENTS')
+    ext["ossrhUsername"] = System.getenv('MAVEN_CENTRAL_USERNAME')
+    ext["ossrhPassword"] = System.getenv('MAVEN_CENTRAL_PASSWORD')
     ext["sonatypeStagingProfileId"] = System.getenv('SONATYPE_STAGING_PROFILE_ID')
 }
 
@@ -60,7 +59,7 @@ publishing {
             pom {
                 name = PUBLISH_ARTIFACT_ID
                 description = 'Pick image from Gallery or Capture new image with Camera.'
-                url = 'https://github.com/Drjacky/ImagePicker'
+                url = 'https://github.com/Catlandor/ImagePicker'
                 licenses {
                     license {
                         name = 'The Apache Software License, Version 2.0'
@@ -69,15 +68,14 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = 'drjacky'
-                        name = 'Hossein Abbasi'
-                        email = 'dr.jacky.2005@gmail.com'
+                        id = developerId
+                        email = developerEmail
                     }
                 }
                 scm {
-                    connection = 'https://github.com/Drjacky/ImagePicker.git'
-                    developerConnection = 'https://github.com/Drjacky/ImagePicker.git'
-                    url = 'https://github.com/Drjacky/ImagePicker/tree/master'
+                    connection = 'https://github.com/Catlandor/ImagePicker.git'
+                    developerConnection = 'https://github.com/Catlandor/ImagePicker.git'
+                    url = 'https://github.com/Catlandor/ImagePicker/tree/master'
                 }
                 withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
@@ -109,13 +107,6 @@ publishing {
         }
     }
 }
-
-/*nexusStaging {
-    packageGroup = PUBLISH_GROUP_ID
-    stagingProfileId = sonatypeStagingProfileId
-    username = ossrhUsername
-    password = ossrhPassword
-}*/
 
 signing {
     sign publishing.publications
