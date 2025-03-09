@@ -9,7 +9,6 @@ package com.github.drjacky.imagepicker.listener
  * @since 19 December 2020
  */
 interface DismissListener {
-
     /**
      * This method will be invoked when the dialog is dismissed.
      */
