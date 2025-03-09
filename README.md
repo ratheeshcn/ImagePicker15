@@ -7,13 +7,11 @@ Planned features:
 - Fully support the newest Android API level (API Level 35)
 - Switch uCrop library, since the initial one seems to be stale
 
-[![Java CI with Gradle](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml)
+[![ImagePicker CI](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml/badge.svg)](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml)
 [![Releases](https://img.shields.io/github/release/catlandor/imagePicker/all.svg?style=flat-square)](https://github.com/catlandor/ImagePicker/releases)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
 ![Language](https://img.shields.io/badge/language-Kotlin-orange.svg)
 [![PRWelcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/catlandor/ImagePicker/pulls)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ImagePicker-green.svg?style=flat)](https://android-arsenal.com/details/1/8208)
-![KotlinVersion](https://kotlin-version.aws.icerock.dev/kotlin-version?group=io.github.catlandor&name=imagepicker)
 
 Easy to use and configurable library to **Pick an image from the Gallery or Capture image using Camera**. It also allows to **Crop the Image based on Aspect Ratio, Resolution and Image Size**.
 
