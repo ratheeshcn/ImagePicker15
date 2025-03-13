@@ -1,17 +1,10 @@
 # 📸 Image Picker Library for Android
 
-Migration of repository in progress: Check back later!
-
-Planned features:
-
-- Fully support the newest Android API level (API Level 35)
-- Switch uCrop library, since the initial one seems to be stale
-
 [![ImagePicker CI](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml/badge.svg)](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml)
 [![Releases](https://img.shields.io/github/release/catlandor/imagePicker/all.svg?style=flat-square)](https://github.com/catlandor/ImagePicker/releases)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
 ![Language](https://img.shields.io/badge/language-Kotlin-orange.svg)
-[![PRWelcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/catlandor/ImagePicker/pulls)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A user-friendly and configurable library to **pick an image from the gallery or capture an image using the camera**. It also allows you to **crop the image** based on aspect ratio, resolution, and image size.
 
@@ -231,7 +224,7 @@ ImagePicker.with(this)
   * Sample - Android Lollipop (API 21)
 
 ## 📃 Libraries Used
-* uCrop [https://github.com/Yalantis/uCrop](https://github.com/Yalantis/uCrop)
+* uCrop-n-Edit [https://github.com/jens-muenker/uCrop-n-Edit](https://github.com/jens-muenker/uCrop-n-Edit)
 * Compressor [https://github.com/zetbaitsu/Compressor](https://github.com/zetbaitsu/Compressor)
 * ImagePicker original repository [https://github.com/Dhaval2404/ImagePicker](https://github.com/Dhaval2404/ImagePicker)
 * ImagePicker fork, on which this fork is based on [https://github.com/Drjacky/ImagePicker](https://github.com/Drjacky/ImagePicker)
