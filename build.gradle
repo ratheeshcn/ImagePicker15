@@ -20,7 +20,7 @@ buildscript {
 }
 
 plugins {
-    id "com.vanniktech.maven.publish" version "0.31.0-rc2"
+    id "com.vanniktech.maven.publish" version "0.31.0"
 }
 
 allprojects {
