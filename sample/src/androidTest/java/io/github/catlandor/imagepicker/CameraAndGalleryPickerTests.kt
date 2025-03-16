@@ -1,7 +1,5 @@
 package io.github.catlandor.imagepicker
 
-import android.Manifest
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Instrumentation
 import android.content.res.Resources
 import android.os.Build
@@ -13,7 +11,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.GrantPermissionRule
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObjectNotFoundException
@@ -50,8 +47,6 @@ class CameraAndGalleryPickerTests {
         instrumentation = InstrumentationRegistry.getInstrumentation()
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         resources = InstrumentationRegistry.getInstrumentation().targetContext.resources
-
-        grantPermissions()
     }
 
     @get:Rule
@@ -59,11 +54,6 @@ class CameraAndGalleryPickerTests {
 
     @get:Rule
     val screenLockRule = TestUtils.RunWhenScreenOffOrLockedRule()
-
-    private val permissions = arrayOf(
-        Manifest.permission.CAMERA,
-        WRITE_EXTERNAL_STORAGE
-    )
 
     @Test
     fun addProfilePhoto_PhotoOption_PhotoAdded() {
@@ -107,42 +97,4 @@ class CameraAndGalleryPickerTests {
             }
         }
     }
-
-    private fun grantPermissions(): Any? =
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            GrantPermissionRule.grant(
-                *permissions,
-                WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        } else {
-            val targetPackageName = instrumentation.targetContext.packageName
-
-            permissions.forEach {
-                val permissionCommand =
-                    String.format("appops set %s %s allow", targetPackageName, it)
-
-                device.executeShellCommand(permissionCommand)
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                val permissionCommand =
-                    String.format(
-                        "appops set %s %s allow",
-                        targetPackageName,
-                        Manifest.permission.READ_MEDIA_IMAGES
-                    )
-
-                device.executeShellCommand(permissionCommand)
-            } else {
-                val permissionCommand =
-                    String.format(
-                        "appops set %s %s allow",
-                        targetPackageName,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-
-                device.executeShellCommand(permissionCommand)
-            }
-        }
 }
