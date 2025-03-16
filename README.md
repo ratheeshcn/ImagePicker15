@@ -21,11 +21,12 @@ A user-friendly and configurable library to **pick an image from the gallery or 
 ## 🎬 Preview
 
 
-|                                   Profile Image Picker                                   |                                       Gallery Only                                       |                                       Camera Only                                       |
-|:----------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:|
-| ![](https://github.com/Drjacky/ImagePicker/blob/master/art/imagepicker_profile_demo.gif) | ![](https://github.com/Drjacky/ImagePicker/blob/master/art/imagepicker_gallery_demo.gif) | ![](https://github.com/Drjacky/ImagePicker/blob/master/art/imagepicker_camera_demo.gif) |
+|                                         Profile Image Picker                                        |                                         Gallery Only                                        |                                        Camera Only                                         |
+|:---------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------:|
+| ![GalleryAndPhoto](https://github.com/user-attachments/assets/bee516f3-a28b-400e-9408-9917c428107b) | ![Gallery](https://github.com/user-attachments/assets/359d41e9-a151-4613-b711-3850be9977b5) | ![Camera](https://github.com/user-attachments/assets/804a0309-5070-49d4-a4ef-3c3dbee49b60) |
 
 ## 💻 Installation
+
 
 ### Gradle
 
