@@ -50,43 +50,19 @@ class MainActivity : AppCompatActivity() {
         contentProfileBinding = binding.content.contentProfile
         contentProfileBinding.imgProfile.setDrawableImage(R.drawable.ic_person, true)
 
-        contentProfileBinding.fabAddPhoto.setOnClickListener {
-            pickProfileImage()
-        }
-
-        contentProfileBinding.imgProfile.setOnClickListener { view ->
-            showImage(view)
-        }
-
-        contentProfileBinding.imgProfileInfo.setOnClickListener { view ->
-            showImageInfo(view)
-        }
+        contentProfileBinding.fabAddPhoto.setOnClickListener { pickProfileImage() }
+        contentProfileBinding.imgProfile.setOnClickListener(this::showImage)
+        contentProfileBinding.imgProfileInfo.setOnClickListener(this::showImageInfo)
 
         contentCameraOnlyBinding = binding.content.contentCameraOnly
-        contentCameraOnlyBinding.fabAddCameraPhoto.setOnClickListener {
-            pickCameraImage()
-        }
-
-        contentCameraOnlyBinding.imgCamera.setOnClickListener { view ->
-            showImage(view)
-        }
-
-        contentCameraOnlyBinding.imgCameraInfo.setOnClickListener { view ->
-            showImageInfo(view)
-        }
+        contentCameraOnlyBinding.fabAddCameraPhoto.setOnClickListener { pickCameraImage() }
+        contentCameraOnlyBinding.imgCamera.setOnClickListener(this::showImage)
+        contentCameraOnlyBinding.imgCameraInfo.setOnClickListener(this::showImageInfo)
 
         contentGalleryOnlyBinding = binding.content.contentGalleryOnly
-        contentGalleryOnlyBinding.fabAddGalleryPhoto.setOnClickListener {
-            pickGalleryImage()
-        }
-
-        contentGalleryOnlyBinding.imgGallery.setOnClickListener { view ->
-            showImage(view)
-        }
-
-        contentGalleryOnlyBinding.imgGalleryInfo.setOnClickListener { view ->
-            showImageInfo(view)
-        }
+        contentGalleryOnlyBinding.fabAddGalleryPhoto.setOnClickListener { pickGalleryImage() }
+        contentGalleryOnlyBinding.imgGallery.setOnClickListener(this::showImage)
+        contentGalleryOnlyBinding.imgGalleryInfo.setOnClickListener(this::showImageInfo)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
