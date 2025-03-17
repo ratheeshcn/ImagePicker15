@@ -20,7 +20,6 @@ import java.io.File
  */
 @Suppress("unused")
 open class ImagePicker {
-
     companion object {
         // Default Request Code to Pick Image
         const val RESULT_ERROR = 64
@@ -48,25 +47,19 @@ open class ImagePicker {
          * @param activity Activity Instance
          */
         @JvmStatic
-        fun with(activity: Activity): Builder {
-            return Builder(activity)
-        }
+        fun with(activity: Activity): Builder = Builder(activity)
 
         /**
          * Get error message from intent
          */
         @JvmStatic
-        fun getError(data: Intent?): String {
-            return data?.getStringExtra(EXTRA_ERROR) ?: "Unknown Error!"
-        }
+        fun getError(data: Intent?): String = data?.getStringExtra(EXTRA_ERROR) ?: "Unknown Error!"
 
         /**
          * Get File Path from intent
          */
         @JvmStatic
-        fun getFilePath(data: Intent?): String? {
-            return data?.getStringExtra(EXTRA_FILE_PATH)
-        }
+        fun getFilePath(data: Intent?): String? = data?.getStringExtra(EXTRA_FILE_PATH)
 
         @JvmStatic
         fun getAllFilePath(data: Intent?): ArrayList<Uri>? {
@@ -97,7 +90,6 @@ open class ImagePicker {
     }
 
     class Builder(private val activity: Activity) {
-
         // Image Provider
         private var imageProvider = ImageProvider.BOTH
 
@@ -140,7 +132,6 @@ open class ImagePicker {
         /**
          * Capture image using Both Camera and Gallery.
          */
-        // @Deprecated("Please use provider(ImageProvider.BOTH) instead")
         fun bothCameraGallery(): Builder {
             this.imageProvider = ImageProvider.BOTH
             return this
@@ -149,7 +140,6 @@ open class ImagePicker {
         /**
          * Only Capture image using Camera.
          */
-        // @Deprecated("Please use provider(ImageProvider.CAMERA) instead")
         fun cameraOnly(): Builder {
             this.imageProvider = ImageProvider.CAMERA
             return this
@@ -158,7 +148,6 @@ open class ImagePicker {
         /**
          * Only Pick image from gallery.
          */
-        // @Deprecated("Please use provider(ImageProvider.GALLERY) instead")
         fun galleryOnly(): Builder {
             this.imageProvider = ImageProvider.GALLERY
             return this
@@ -216,9 +205,7 @@ open class ImagePicker {
          * Crop Square Image, Useful for Profile Image.
          *
          */
-        fun cropSquare(): Builder {
-            return crop(1f, 1f)
-        }
+        fun cropSquare(): Builder = crop(1f, 1f)
 
         fun setMultipleAllowed(isMultiple: Boolean): Builder {
             this.isMultiple = isMultiple
@@ -262,11 +249,12 @@ open class ImagePicker {
          * Sets the callback that will be called when the dialog is dismissed for any reason.
          */
         fun setDismissListener(listener: (() -> Unit)): Builder {
-            this.dismissListener = object : DismissListener {
-                override fun onDismiss() {
-                    listener.invoke()
+            this.dismissListener =
+                object : DismissListener {
+                    override fun onDismiss() {
+                        listener.invoke()
+                    }
                 }
-            }
             return this
         }
 
@@ -279,15 +267,16 @@ open class ImagePicker {
             if (imageProvider == ImageProvider.BOTH) {
                 DialogHelper.showChooseAppDialog(
                     context = activity,
-                    listener = object : ResultListener<ImageProvider> {
-                        override fun onResult(t: ImageProvider?) {
-                            t?.let {
-                                imageProvider = it
-                                imageProviderInterceptor?.invoke(imageProvider)
-                                onResult(createIntent())
+                    listener =
+                        object : ResultListener<ImageProvider> {
+                            override fun onResult(t: ImageProvider?) {
+                                t?.let {
+                                    imageProvider = it
+                                    imageProviderInterceptor?.invoke(imageProvider)
+                                    onResult(createIntent())
+                                }
                             }
-                        }
-                    },
+                        },
                     dismissListener
                 )
             }
@@ -296,8 +285,8 @@ open class ImagePicker {
         /**
          * Get Bundle for ImagePickerActivity
          */
-        private fun getBundle(): Bundle {
-            return Bundle().apply {
+        private fun getBundle(): Bundle =
+            Bundle().apply {
                 putSerializable(EXTRA_IMAGE_PROVIDER, imageProvider)
                 putStringArray(EXTRA_MIME_TYPES, mimeTypes)
 
@@ -314,7 +303,5 @@ open class ImagePicker {
 
                 putBoolean(EXTRA_KEEP_RATIO, keepRatio)
             }
-        }
     }
-
 }

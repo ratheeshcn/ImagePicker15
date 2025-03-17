@@ -23,7 +23,6 @@ import io.github.catlandor.imagepicker.sample.util.IntentUtil
 import io.github.catlandor.imagepicker.util.IntentUtils
 
 class MainActivity : AppCompatActivity() {
-
     companion object {
         private const val GITHUB_REPOSITORY = "https://github.com/catlandor/ImagePicker"
     }
@@ -151,7 +150,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun parseError(activityResult: ActivityResult) {
         if (activityResult.resultCode == ImagePicker.RESULT_ERROR) {
-            Toast.makeText(this, ImagePicker.getError(activityResult.data), Toast.LENGTH_SHORT)
+            Toast
+                .makeText(this, ImagePicker.getError(activityResult.data), Toast.LENGTH_SHORT)
                 .show()
         } else {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
@@ -159,39 +159,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun pickProfileImage() {
-        ImagePicker.with(this)
+        ImagePicker
+            .with(this)
             .crop()
             .cropOval()
             .maxResultSize(512, 512, true)
             .provider(ImageProvider.BOTH) // Or bothCameraGallery()
             .setDismissListener {
                 Log.d("ImagePicker", "onDismiss")
-            }
-            .createIntentFromDialog { profileLauncher.launch(it) }
+            }.createIntentFromDialog { profileLauncher.launch(it) }
     }
 
     private fun pickGalleryImage() {
         galleryLauncher.launch(
-            ImagePicker.with(this)
+            ImagePicker
+                .with(this)
                 .crop()
                 .galleryOnly()
                 .setMultipleAllowed(true)
 //                .setOutputFormat(Bitmap.CompressFormat.WEBP)
                 .cropFreeStyle()
                 .galleryMimeTypes( // no gif images at all
-                    mimeTypes = arrayOf(
-                        "image/png",
-                        "image/jpg",
-                        "image/jpeg"
-                    )
-                )
-                .createIntent()
+                    mimeTypes =
+                        arrayOf(
+                            "image/png",
+                            "image/jpg",
+                            "image/jpeg"
+                        )
+                ).createIntent()
         )
     }
 
     private fun pickCameraImage() {
         cameraLauncher.launch(
-            ImagePicker.with(this)
+            ImagePicker
+                .with(this)
                 .crop()
                 .cameraOnly()
                 .maxResultSize(1080, 1920, true)
@@ -200,12 +202,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showImage(view: View) {
-        val uri = when (view) {
-            contentProfileBinding.imgProfile -> profileUri
-            contentCameraOnlyBinding.imgCamera -> cameraUri
-            contentGalleryOnlyBinding.imgGallery -> galleryUri
-            else -> null
-        }
+        val uri =
+            when (view) {
+                contentProfileBinding.imgProfile -> profileUri
+                contentCameraOnlyBinding.imgCamera -> cameraUri
+                contentGalleryOnlyBinding.imgGallery -> galleryUri
+                else -> null
+            }
 
         uri?.let {
             startActivity(IntentUtils.getUriViewIntent(this, uri))
@@ -213,14 +216,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showImageInfo(view: View) {
-        val uri = when (view) {
-            contentProfileBinding.imgProfileInfo -> profileUri
-            contentCameraOnlyBinding.imgCameraInfo -> cameraUri
-            contentGalleryOnlyBinding.imgGalleryInfo -> galleryUri
-            else -> null
-        }
+        val uri =
+            when (view) {
+                contentProfileBinding.imgProfileInfo -> profileUri
+                contentCameraOnlyBinding.imgCameraInfo -> cameraUri
+                contentGalleryOnlyBinding.imgGalleryInfo -> galleryUri
+                else -> null
+            }
 
-        AlertDialog.Builder(this)
+        AlertDialog
+            .Builder(this)
             .setTitle("Image Info")
             .setMessage(FileUtil.getFileInfo(this, uri))
             .setPositiveButton("Ok", null)

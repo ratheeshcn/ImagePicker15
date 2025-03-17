@@ -25,18 +25,19 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class CameraAndGalleryPickerTests {
-
     private val threadTimeout = 5000L
-    private val cameraButtonShutter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-        "com.android.camera2:id/shutter_button"
-    } else {
-        "com.android.camera:id/shutter_button"
-    }
-    private val cameraButtonDone = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-        "com.android.camera2:id/done_button"
-    } else {
-        "com.android.camera:id/btn_done"
-    }
+    private val cameraButtonShutter =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            "com.android.camera2:id/shutter_button"
+        } else {
+            "com.android.camera:id/shutter_button"
+        }
+    private val cameraButtonDone =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            "com.android.camera2:id/done_button"
+        } else {
+            "com.android.camera:id/btn_done"
+        }
 
     private lateinit var instrumentation: Instrumentation
     private lateinit var device: UiDevice

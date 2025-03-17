@@ -29,7 +29,6 @@ class CameraProvider(
     private val launcher: (Intent) -> Unit
 ) :
     BaseProvider(activity) {
-
     companion object {
         /**
          * Key to Save/Retrieve Camera File state
@@ -39,9 +38,10 @@ class CameraProvider(
         /**
          * Permission Require for Image Capture using Camera
          */
-        private val REQUIRED_PERMISSIONS = arrayOf(
-            Manifest.permission.CAMERA
-        )
+        private val REQUIRED_PERMISSIONS =
+            arrayOf(
+                Manifest.permission.CAMERA
+            )
 
         private const val PERMISSION_INTENT_REQ_CODE = 4282
     }
@@ -183,11 +183,10 @@ class CameraProvider(
      * @param context Application Context
      * @return boolean true if all required permission granted else false.
      */
-    private fun isPermissionGranted(context: Context): Boolean {
-        return getRequiredPermission(context).none {
+    private fun isPermissionGranted(context: Context): Boolean =
+        getRequiredPermission(context).none {
             !PermissionUtil.isPermissionGranted(context, it)
         }
-    }
 
     /**
      * Check if permission Exists in Manifest
@@ -195,10 +194,9 @@ class CameraProvider(
      * @param context Application Context
      * @return Array<String> returns permission which are added in Manifest
      */
-    private fun getRequiredPermission(context: Context): Array<String> {
-        return REQUIRED_PERMISSIONS.filter {
-            PermissionUtil.isPermissionInManifest(context, it)
-        }.toTypedArray()
-    }
-
+    private fun getRequiredPermission(context: Context): Array<String> =
+        REQUIRED_PERMISSIONS
+            .filter {
+                PermissionUtil.isPermissionInManifest(context, it)
+            }.toTypedArray()
 }

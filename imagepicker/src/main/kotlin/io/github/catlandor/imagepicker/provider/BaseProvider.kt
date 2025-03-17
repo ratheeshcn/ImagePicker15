@@ -14,7 +14,6 @@ import io.github.catlandor.imagepicker.ImagePickerActivity
  */
 abstract class BaseProvider(protected val activity: ImagePickerActivity) :
     ContextWrapper(activity) {
-
     /**
      * Cancel operation and Set Error Message
      *

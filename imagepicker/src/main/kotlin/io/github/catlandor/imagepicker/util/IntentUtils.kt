@@ -114,10 +114,11 @@ object IntentUtils {
                 }
 
                 // Tested API 21 Android version 5.0.1(Samsung S4)
-                else -> intent.putExtra(
-                    CAMERA_FACING_EXTRA,
-                    1
-                )
+                else ->
+                    intent.putExtra(
+                        CAMERA_FACING_EXTRA,
+                        1
+                    )
             }
         }
 
@@ -155,12 +156,13 @@ object IntentUtils {
             context.packageName + context.getString(R.string.image_picker_provider_authority_suffix)
 
         val file = DocumentFile.fromSingleUri(context, uri)
-        val dataUri = if (file?.canRead() == true) {
-            uri
-        } else {
-            val filePath = FileUriUtils.getRealPath(context, uri)!!
-            FileProvider.getUriForFile(context, authority, File(filePath))
-        }
+        val dataUri =
+            if (file?.canRead() == true) {
+                uri
+            } else {
+                val filePath = FileUriUtils.getRealPath(context, uri)!!
+                FileProvider.getUriForFile(context, authority, File(filePath))
+            }
 
         intent.setDataAndType(dataUri, "image/*")
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
