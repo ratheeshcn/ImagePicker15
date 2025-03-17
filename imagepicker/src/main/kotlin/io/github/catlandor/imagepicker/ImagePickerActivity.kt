@@ -165,19 +165,21 @@ class ImagePickerActivity : AppCompatActivity() {
     fun setImage(uri: Uri, isCamera: Boolean) {
         mImageUri = uri
         when {
-            mCropProvider.isCropEnabled() -> mCropProvider.startIntent(
-                uri = uri,
-                cropOval = mCropProvider.isCropOvalEnabled(),
-                cropFreeStyle = mCropProvider.isCropFreeStyleEnabled(),
-                isCamera = isCamera,
-                isMultipleFiles = false,
-                outputFormat = mCropProvider.outputFormat()
-            )
+            mCropProvider.isCropEnabled() ->
+                mCropProvider.startIntent(
+                    uri = uri,
+                    cropOval = mCropProvider.isCropOvalEnabled(),
+                    cropFreeStyle = mCropProvider.isCropFreeStyleEnabled(),
+                    isCamera = isCamera,
+                    isMultipleFiles = false,
+                    outputFormat = mCropProvider.outputFormat()
+                )
 
-            mCompressionProvider.isResizeRequired(uri) -> mCompressionProvider.compress(
-                uri = uri,
-                outputFormat = mCropProvider.outputFormat()
-            )
+            mCompressionProvider.isResizeRequired(uri) ->
+                mCompressionProvider.compress(
+                    uri = uri,
+                    outputFormat = mCropProvider.outputFormat()
+                )
 
             else -> setResult(uri)
         }
@@ -200,19 +202,21 @@ class ImagePickerActivity : AppCompatActivity() {
     private fun setMultipleCropper(uri: Uri) {
         mImageUri = uri
         when {
-            mCropProvider.isCropEnabled() -> mCropProvider.startIntent(
-                uri = uri,
-                cropOval = mCropProvider.isCropOvalEnabled(),
-                cropFreeStyle = mCropProvider.isCropFreeStyleEnabled(),
-                isCamera = false,
-                isMultipleFiles = true,
-                outputFormat = mCropProvider.outputFormat()
-            )
+            mCropProvider.isCropEnabled() ->
+                mCropProvider.startIntent(
+                    uri = uri,
+                    cropOval = mCropProvider.isCropOvalEnabled(),
+                    cropFreeStyle = mCropProvider.isCropFreeStyleEnabled(),
+                    isCamera = false,
+                    isMultipleFiles = true,
+                    outputFormat = mCropProvider.outputFormat()
+                )
 
-            mCompressionProvider.isResizeRequired(uri) -> mCompressionProvider.compress(
-                uri = uri,
-                outputFormat = mCropProvider.outputFormat()
-            )
+            mCompressionProvider.isResizeRequired(uri) ->
+                mCompressionProvider.compress(
+                    uri = uri,
+                    outputFormat = mCropProvider.outputFormat()
+                )
         }
     }
 

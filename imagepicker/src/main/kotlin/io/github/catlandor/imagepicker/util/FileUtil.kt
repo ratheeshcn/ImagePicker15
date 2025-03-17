@@ -14,7 +14,8 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 /**
  * File Utility Methods
@@ -24,7 +25,6 @@ import java.util.*
  * @since 04 January 2019
  */
 object FileUtil {
-
     /**
      * Get Image File
      *
@@ -80,11 +80,12 @@ object FileUtil {
 
             val authority =
                 context.packageName + context.getString(R.string.image_picker_provider_authority_suffix)
-            val uriForFile = FileProvider.getUriForFile(
-                context,
-                authority,
-                file
-            )
+            val uriForFile =
+                FileProvider.getUriForFile(
+                    context,
+                    authority,
+                    file
+                )
             return uriForFile
         } catch (ex: IOException) {
             ex.printStackTrace()
@@ -99,7 +100,7 @@ object FileUtil {
      */
     private fun getCameraDirectory(context: Context): File {
         val dir =
-            context.getExternalFilesDir(Environment.DIRECTORY_DCIM) // Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+            context.getExternalFilesDir(Environment.DIRECTORY_DCIM)
         return File(dir, "Camera")
     }
 
@@ -158,9 +159,8 @@ object FileUtil {
      * @param uri Uri to get Image Size
      * @return Int Image File Size
      */
-    fun getImageSize(context: Context, uri: Uri): Long {
-        return getDocumentFile(context, uri)?.length() ?: 0
-    }
+    fun getImageSize(context: Context, uri: Uri): Long =
+        getDocumentFile(context, uri)?.length() ?: 0
 
     /**
      * Create copy of Uri into application specific local path
@@ -228,15 +228,12 @@ object FileUtil {
      *
      * @return Boolean, True if Uri is local file object else return false
      */
-    private fun isFileUri(uri: Uri): Boolean {
-        return "file".equals(uri.scheme, ignoreCase = true)
-    }
+    private fun isFileUri(uri: Uri): Boolean = "file".equals(uri.scheme, ignoreCase = true)
 
-    private inline fun <reified T : Enum<T>> safeValueOf(name: String, defaultValue: T): T {
-        return try {
+    private inline fun <reified T : Enum<T>> safeValueOf(name: String, defaultValue: T): T =
+        try {
             java.lang.Enum.valueOf(T::class.java, name) ?: defaultValue
         } catch (e: IllegalArgumentException) {
             defaultValue
         }
-    }
 }

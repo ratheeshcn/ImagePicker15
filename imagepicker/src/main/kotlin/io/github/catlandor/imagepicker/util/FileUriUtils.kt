@@ -5,13 +5,17 @@ import android.content.Context
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.webkit.MimeTypeMap
-import java.io.*
+import androidx.core.net.toUri
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 
 /**
  * This file was taken from
@@ -23,7 +27,6 @@ import java.io.*
  */
 
 object FileUriUtils {
-
     fun getRealPath(context: Context, uri: Uri): String? {
         var path = getPathFromLocalUri(context, uri)
         if (path == null) {
@@ -33,10 +36,8 @@ object FileUriUtils {
     }
 
     private fun getPathFromLocalUri(context: Context, uri: Uri): String? {
-        val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-
         // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+        if (DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
             when {
                 isExternalStorageDocument(uri) -> {
@@ -62,6 +63,7 @@ object FileUriUtils {
                         }
                     }
                 }
+
                 isDownloadsDocument(uri) -> {
                     var id = DocumentsContract.getDocumentId(uri)
                     if (id.contains(":")) {
@@ -69,10 +71,11 @@ object FileUriUtils {
                     }
                     if (id.isNotBlank()) {
                         return try {
-                            val contentUri = ContentUris.withAppendedId(
-                                Uri.parse("content://downloads/public_downloads"),
-                                java.lang.Long.valueOf(id)
-                            )
+                            val contentUri =
+                                ContentUris.withAppendedId(
+                                    "content://downloads/public_downloads".toUri(),
+                                    java.lang.Long.valueOf(id)
+                                )
                             getDataColumn(context, contentUri, null, null)
                         } catch (e: NumberFormatException) {
                             Log.i("ImagePicker", e.message.toString())
@@ -80,6 +83,7 @@ object FileUriUtils {
                         }
                     }
                 }
+
                 isMediaDocument(uri) -> {
                     val docId = DocumentsContract.getDocumentId(uri)
                     val split =
@@ -139,23 +143,7 @@ object FileUriUtils {
                 val index = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(index)
             }
-        } catch (ex: Exception) {
-        } finally {
-            cursor?.close()
-        }
-        return null
-    }
-
-    private fun getFilePath(context: Context, uri: Uri): String? {
-        var cursor: Cursor? = null
-        val projection = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
-
-        try {
-            cursor = context.contentResolver.query(uri, projection, null, null, null)
-            if (cursor != null && cursor.moveToFirst()) {
-                val index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)
-                return cursor.getString(index)
-            }
+        } catch (_: Exception) {
         } finally {
             cursor?.close()
         }
@@ -205,12 +193,13 @@ object FileUriUtils {
     fun getImageExtension(context: Context, uriImage: Uri): String {
         var extension: String?
 
-        extension = try {
-            val mimeTypeMap = MimeTypeMap.getSingleton()
-            mimeTypeMap.getExtensionFromMimeType(context.contentResolver.getType(uriImage))
-        } catch (e: Exception) {
-            null
-        }
+        extension =
+            try {
+                val mimeTypeMap = MimeTypeMap.getSingleton()
+                mimeTypeMap.getExtensionFromMimeType(context.contentResolver.getType(uriImage))
+            } catch (e: Exception) {
+                null
+            }
 
         if (extension.isNullOrEmpty()) {
             // default extension for matches the previous behavior of the plugin
@@ -225,9 +214,8 @@ object FileUriUtils {
      *
      * @return extension of image with dot, or default .jpg if it none.
      */
-    fun getImageExtension(context: Context, file: File): String {
-        return getImageExtension(context, Uri.fromFile(file))
-    }
+    fun getImageExtension(context: Context, file: File): String =
+        getImageExtension(context, Uri.fromFile(file))
 
     fun getImageExtensionFormat(context: Context, uri: Uri): Bitmap.CompressFormat {
         val extension = getImageExtension(context, uri)
@@ -238,31 +226,27 @@ object FileUriUtils {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
-    private fun isExternalStorageDocument(uri: Uri): Boolean {
-        return "com.android.externalstorage.documents" == uri.authority
-    }
+    private fun isExternalStorageDocument(uri: Uri): Boolean =
+        "com.android.externalstorage.documents" == uri.authority
 
     /**
      * @param uri The Uri to check.
      * @return Whether the Uri authority is DownloadsProvider.
      */
-    private fun isDownloadsDocument(uri: Uri): Boolean {
-        return "com.android.providers.downloads.documents" == uri.authority
-    }
+    private fun isDownloadsDocument(uri: Uri): Boolean =
+        "com.android.providers.downloads.documents" == uri.authority
 
     /**
      * @param uri The Uri to check.
      * @return Whether the Uri authority is MediaProvider.
      */
-    private fun isMediaDocument(uri: Uri): Boolean {
-        return "com.android.providers.media.documents" == uri.authority
-    }
+    private fun isMediaDocument(uri: Uri): Boolean =
+        "com.android.providers.media.documents" == uri.authority
 
     /**
      * @param uri The Uri to check.
      * @return Whether the Uri authority is Google Photos.
      */
-    private fun isGooglePhotosUri(uri: Uri): Boolean {
-        return "com.google.android.apps.photos.content" == uri.authority
-    }
+    private fun isGooglePhotosUri(uri: Uri): Boolean =
+        "com.google.android.apps.photos.content" == uri.authority
 }

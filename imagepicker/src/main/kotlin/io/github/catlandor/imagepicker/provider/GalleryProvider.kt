@@ -28,7 +28,6 @@ class GalleryProvider(
     private val launcher: (Intent) -> Unit
 ) :
     BaseProvider(activity) {
-
     private var fileList: ArrayList<Uri>? = null
 
     companion object {
@@ -40,20 +39,21 @@ class GalleryProvider(
          * From Android 10, This permission is not required,
          * But Library will check permission only if defined in manifest
          */
-        private val REQUIRED_PERMISSIONS = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arrayOf(
-                Manifest.permission.READ_MEDIA_IMAGES
-            )
-        } else {
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        }
+        private val REQUIRED_PERMISSIONS =
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                arrayOf(
+                    Manifest.permission.READ_MEDIA_IMAGES
+                )
+            } else {
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            }
 
         private const val PERMISSION_INTENT_REQ_CODE = 4262
     }
@@ -115,11 +115,10 @@ class GalleryProvider(
      * @param context Application Context
      * @return boolean true if all required permission granted else false.
      */
-    private fun isPermissionGranted(context: Context): Boolean {
-        return getRequiredPermission(context).none {
+    private fun isPermissionGranted(context: Context): Boolean =
+        getRequiredPermission(context).none {
             !PermissionUtil.isPermissionGranted(context, it)
         }
-    }
 
     /**
      * Check if permission Exists in Manifest
@@ -127,11 +126,11 @@ class GalleryProvider(
      * @param context Application Context
      * @return Array<String> returns permission which are added in Manifest
      */
-    private fun getRequiredPermission(context: Context): Array<String> {
-        return REQUIRED_PERMISSIONS.filter {
-            PermissionUtil.isPermissionInManifest(context, it)
-        }.toTypedArray()
-    }
+    private fun getRequiredPermission(context: Context): Array<String> =
+        REQUIRED_PERMISSIONS
+            .filter {
+                PermissionUtil.isPermissionInManifest(context, it)
+            }.toTypedArray()
 
     /**
      * Handle Requested Permission Result

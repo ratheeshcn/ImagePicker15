@@ -17,7 +17,6 @@ import io.github.catlandor.imagepicker.listener.ResultListener
  * @since 04 January 2018
  */
 internal object DialogHelper {
-
     /**
      * Show Image Provide Picker Dialog. This will streamline the code to pick/capture image
      *
@@ -30,20 +29,19 @@ internal object DialogHelper {
         val layoutInflater = LayoutInflater.from(context)
         val customView = layoutInflater.inflate(R.layout.dialog_choose_app, null)
 
-        val dialog = AlertDialog.Builder(context)
-            .setTitle(R.string.title_choose_image_provider)
-            .setView(customView)
-            .setOnCancelListener {
-                listener.onResult(null)
-            }
-            .setOnDismissListener {
-                dismissListener?.onDismiss()
-                listener.onResult(null)
-            }
-            .setNegativeButton(R.string.action_cancel) { _, _ ->
-                listener.onResult(null)
-            }
-            .show()
+        val dialog =
+            AlertDialog
+                .Builder(context)
+                .setTitle(R.string.title_choose_image_provider)
+                .setView(customView)
+                .setOnCancelListener {
+                    listener.onResult(null)
+                }.setOnDismissListener {
+                    dismissListener?.onDismiss()
+                    listener.onResult(null)
+                }.setNegativeButton(R.string.action_cancel) { _, _ ->
+                    listener.onResult(null)
+                }.show()
 
         // Handle Camera option click
         customView.findViewById<LinearLayout>(R.id.lytCameraPick).setOnClickListener {

@@ -15,9 +15,8 @@ object TestUtils {
      * emulator.
      */
     class RunWhenScreenOffOrLockedRule : TestRule {
-        override fun apply(base: Statement, description: Description): Statement {
-            return object : Statement() {
-
+        override fun apply(base: Statement, description: Description): Statement =
+            object : Statement() {
                 override fun evaluate() {
                     // Turn screen on
                     UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).wakeUp()
@@ -35,6 +34,5 @@ object TestUtils {
                     base.evaluate()
                 }
             }
-        }
     }
 }

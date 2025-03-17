@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.net.toUri
 import io.github.catlandor.imagepicker.R
 
 /**
@@ -14,7 +15,6 @@ import io.github.catlandor.imagepicker.R
  * @since 05 January 2019
  */
 object IntentUtil {
-
     /**
      * View Image in 3rd party apps
      *
@@ -41,8 +41,9 @@ object IntentUtil {
      */
     @JvmStatic
     fun openURL(activity: Activity, url: String) {
-        val link = Uri.parse(url)
-        CustomTabsIntent.Builder()
+        val link = url.toUri()
+        CustomTabsIntent
+            .Builder()
             .build()
             .launchUrl(activity, link)
     }

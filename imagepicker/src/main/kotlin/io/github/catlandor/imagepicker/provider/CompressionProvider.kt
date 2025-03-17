@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import androidx.core.graphics.scale
 import androidx.lifecycle.lifecycleScope
 import io.github.catlandor.imagepicker.ImagePicker
 import io.github.catlandor.imagepicker.ImagePickerActivity
@@ -13,7 +14,6 @@ import io.github.catlandor.imagepicker.util.FileUriUtils
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
-import androidx.core.graphics.scale
 
 /**
  * Compress Selected/Captured Image
@@ -23,7 +23,6 @@ import androidx.core.graphics.scale
  * @since 04 January 2019
  */
 class CompressionProvider(activity: ImagePickerActivity) : BaseProvider(activity) {
-
     private val maxWidth: Int
     private val maxHeight: Int
     private val keepRatio: Boolean
@@ -40,14 +39,13 @@ class CompressionProvider(activity: ImagePickerActivity) : BaseProvider(activity
      * Check if compression is required
      * @param uri File object to apply Compression
      */
-    fun isResizeRequired(uri: Uri): Boolean {
-        return if (maxWidth > 0 && maxHeight > 0) {
+    fun isResizeRequired(uri: Uri): Boolean =
+        if (maxWidth > 0 && maxHeight > 0) {
             val sizes = getImageSize(uri)
             sizes[0] > maxWidth || sizes[1] > maxHeight
         } else {
             false
         }
-    }
 
     /**
      * Compress given file if enabled.
@@ -70,22 +68,23 @@ class CompressionProvider(activity: ImagePickerActivity) : BaseProvider(activity
         var bitmap = BitmapFactory.decodeFile(uri.path, BitmapFactory.Options())
         if (maxWidth > 0L && maxHeight > 0L) {
             // resize if desired
-            bitmap = if ((bitmap.width > maxWidth || bitmap.height > maxHeight) && keepRatio) {
-                var width = maxWidth
-                var height = maxHeight
-                if (bitmap.width > bitmap.height) {
-                    val ratio = bitmap.width.toFloat() / maxWidth
-                    width = maxWidth
-                    height = (bitmap.height / ratio).toInt()
-                } else if (bitmap.height > bitmap.width) {
-                    val ratio = bitmap.height.toFloat() / maxHeight
-                    height = maxHeight
-                    width = (bitmap.width / ratio).toInt()
+            bitmap =
+                if ((bitmap.width > maxWidth || bitmap.height > maxHeight) && keepRatio) {
+                    var width = maxWidth
+                    var height = maxHeight
+                    if (bitmap.width > bitmap.height) {
+                        val ratio = bitmap.width.toFloat() / maxWidth
+                        width = maxWidth
+                        height = (bitmap.height / ratio).toInt()
+                    } else if (bitmap.height > bitmap.width) {
+                        val ratio = bitmap.height.toFloat() / maxHeight
+                        height = maxHeight
+                        width = (bitmap.width / ratio).toInt()
+                    }
+                    bitmap.scale(width, height)
+                } else {
+                    bitmap.scale(maxWidth, maxHeight)
                 }
-                bitmap.scale(width, height)
-            } else {
-                bitmap.scale(maxWidth, maxHeight)
-            }
         }
 
         val format = outputFormat ?: FileUriUtils.getImageExtensionFormat(baseContext, uri)

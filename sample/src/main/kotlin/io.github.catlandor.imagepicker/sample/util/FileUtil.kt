@@ -7,7 +7,7 @@ import io.github.catlandor.imagepicker.util.FileUtil.getDocumentFile
 import io.github.catlandor.imagepicker.util.FileUtil.getImageResolution
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 /**
  * File Utility
@@ -17,7 +17,6 @@ import java.util.*
  * @since 05 January 2019
  */
 object FileUtil {
-
     /**
      * @param context Context
      * @param uri Uri
@@ -44,27 +43,21 @@ object FileUtil {
         val fileSize = getFileSize(document.length())
 
         return StringBuilder()
-
             .append("Resolution: ")
             .append("${resolution.first}x${resolution.second}")
             .append("\n\n")
-
             .append("Modified: ")
             .append(modified)
             .append("\n\n")
-
             .append("File Size: ")
             .append(fileSize)
             .append("\n\n")
-
             /*.append("File Name: ")
             .append(getFileName(context.contentResolver, uri))
             .append("\n\n")*/
-
             .append("File Path: ")
             .append(filePath)
             .append("\n\n")
-
             .append("Uri Path: ")
             .append(uri.toString())
             .toString()
@@ -84,19 +77,15 @@ object FileUtil {
         val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm:ss a", Locale.getDefault())
         val modified = sdf.format(file.lastModified())
         return StringBuilder()
-
             .append("Resolution: ")
             .append("${resolution.first}x${resolution.second}")
             .append("\n\n")
-
             .append("Modified: ")
             .append(modified)
             .append("\n\n")
-
             .append("File Size: ")
             .append(getFileSize(file))
             .append("\n\n")
-
             .append("File Path: ")
             .append(file.absolutePath)
             .toString()
