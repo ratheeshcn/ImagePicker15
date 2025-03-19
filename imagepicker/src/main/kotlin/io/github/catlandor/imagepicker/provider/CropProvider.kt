@@ -1,13 +1,9 @@
 package io.github.catlandor.imagepicker.provider
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import androidx.activity.result.ActivityResult
@@ -17,6 +13,7 @@ import io.github.catlandor.imagepicker.ImagePickerActivity
 import io.github.catlandor.imagepicker.R
 import io.github.catlandor.imagepicker.util.FileUriUtils
 import io.github.catlandor.imagepicker.util.FileUtil.getCompressFormat
+import io.github.catlandor.imagepicker.util.ImageUtil
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -155,7 +152,7 @@ class CropProvider(activity: ImagePickerActivity, private val launcher: (Intent)
         cropImageUri = uri
 
         // Later we will use this bitmap to create the File.
-        val selectedBitmap: Bitmap? = getBitmap(this, uri)
+        val selectedBitmap: Bitmap? = ImageUtil.getBitmap(this, uri)
         selectedBitmap?.let {
             // We can access getExternalFilesDir() without asking any storage permission.
             val selectedImgFile =
@@ -215,24 +212,6 @@ class CropProvider(activity: ImagePickerActivity, private val launcher: (Intent)
             setResultCancel()
         }
     }
-
-    private fun getBitmap(context: Context, imageUri: Uri): Bitmap? =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            try {
-                ImageDecoder.decodeBitmap(
-                    ImageDecoder.createSource(context.contentResolver, imageUri)
-                )
-            } catch (e: ImageDecoder.DecodeException) {
-                null
-            }
-        } else {
-            context
-                .contentResolver
-                .openInputStream(imageUri)
-                ?.use { inputStream ->
-                    BitmapFactory.decodeStream(inputStream)
-                }
-        }
 
     @Throws(IOException::class)
     private fun convertBitmapToFile(destinationFile: File, bitmap: Bitmap, extension: String) {
