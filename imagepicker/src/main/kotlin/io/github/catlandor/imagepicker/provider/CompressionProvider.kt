@@ -11,6 +11,7 @@ import io.github.catlandor.imagepicker.ImagePicker
 import io.github.catlandor.imagepicker.ImagePickerActivity
 import io.github.catlandor.imagepicker.util.ExifDataCopier
 import io.github.catlandor.imagepicker.util.FileUriUtils
+import io.github.catlandor.imagepicker.util.ImageUtil
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -65,8 +66,8 @@ class CompressionProvider(activity: ImagePickerActivity) : BaseProvider(activity
     }
 
     private fun compressTask(uri: Uri, outputFormat: Bitmap.CompressFormat?): File? {
-        var bitmap = BitmapFactory.decodeFile(uri.path, BitmapFactory.Options())
-        if (maxWidth > 0L && maxHeight > 0L) {
+        var bitmap = ImageUtil.getBitmap(activity, uri)
+        if (bitmap != null && maxWidth > 0L && maxHeight > 0L) {
             // resize if desired
             bitmap =
                 if ((bitmap.width > maxWidth || bitmap.height > maxHeight) && keepRatio) {
@@ -98,7 +99,7 @@ class CompressionProvider(activity: ImagePickerActivity) : BaseProvider(activity
                 }
             }
             out = activity.openFileOutput(temp, Context.MODE_PRIVATE)
-            bitmap.compress(format, 100, out)
+            bitmap?.compress(format, 100, out)
             File(tempPath)
         } catch (e: Exception) {
             e.printStackTrace()

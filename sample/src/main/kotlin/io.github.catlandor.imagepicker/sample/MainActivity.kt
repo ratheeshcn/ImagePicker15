@@ -113,7 +113,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    private val cameraLauncher =
+    // Internal because of instrumentation tests
+    internal val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!

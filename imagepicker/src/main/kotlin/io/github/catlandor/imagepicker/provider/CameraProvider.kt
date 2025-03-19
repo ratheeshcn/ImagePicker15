@@ -161,7 +161,7 @@ class CameraProvider(
      *
      * After Camera Image Crop/Compress Original File will not required
      */
-    private fun delete() {
+    fun delete() {
         mCameraUri?.path?.let {
             File(it).delete()
         }

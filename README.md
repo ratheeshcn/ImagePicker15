@@ -1,5 +1,6 @@
 # 📸 Image Picker Library for Android
 
+![Maven Central Version](https://img.shields.io/maven-central/v/io.github.catlandor/ImagePicker)
 [![ImagePicker CI](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml/badge.svg)](https://github.com/Catlandor/ImagePicker/actions/workflows/android.yml)
 [![Releases](https://img.shields.io/github/release/catlandor/imagePicker/all.svg?style=flat-square)](https://github.com/catlandor/ImagePicker/releases)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
@@ -48,7 +49,7 @@ Add the dependency to your app's build.gradle:
 ```
 
 Where `$libVersion`
-= [![libVersion](https://img.shields.io/github/release/catlandor/imagePicker/all.svg?style=flat-square)](https://github.com/catlandor/ImagePicker/releases)
+= ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.catlandor/ImagePicker)
 
 ## 💻 Usage
 
