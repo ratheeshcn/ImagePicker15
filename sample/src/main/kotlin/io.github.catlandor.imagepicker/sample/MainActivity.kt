@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                 parseError(it)
             }
         }
+
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -113,7 +114,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    // Internal because of instrumentation tests
+    // Internal because of instrumentation tests purposes
     internal val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -154,7 +155,7 @@ class MainActivity : AppCompatActivity() {
                 .crop()
                 .galleryOnly()
                 .setMultipleAllowed(true)
-//                .setOutputFormat(Bitmap.CompressFormat.WEBP)
+                // .setOutputFormat(Bitmap.CompressFormat.WEBP)
                 .cropFreeStyle()
                 .galleryMimeTypes( // no gif images at all
                     mimeTypes =
@@ -173,7 +174,7 @@ class MainActivity : AppCompatActivity() {
                 .with(this)
                 .crop()
                 .cameraOnly()
-                .maxResultSize(1080, 1920, true)
+                .maxResultSize(1080, 1920, keepRatio = true)
                 .createIntent()
         )
     }
