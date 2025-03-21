@@ -47,5 +47,5 @@ jobs:
         uses: saadmk11/changelog-ci@v1.1.2
         with:
             release_version: ${{ github.event.release.tag_name }}
+            config_file: changelog-config.yaml
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            config_file: changelog-config.json

@@ -37,8 +37,8 @@ Add the following to your project's `build.gradle`:
 ```groovy
 allprojects {
    repositories {
-		mavenCentral() // For ImagePicker library
-		maven { url "https://jitpack.io" }  // For uCrop - an internal library
+        mavenCentral() // For ImagePicker library
+        maven { url "https://jitpack.io" }  // For uCrop - an internal library
    }
 }
 ```
@@ -60,28 +60,28 @@ Where `$libVersion`
 
 ```kotlin
 private val launcher =
-	registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-		when (it.resultCode) {
-			Activity.RESULT_OK -> {
-				val uri: Uri = it.data?.data!!
-				// Use the uri to load the image
-			}
-			ImagePicker.RESULT_ERROR -> {
-				val errorMessage = ImagePicker.getError(it.data)
-				// Process the error message, e.g. show a toast
-			}
-			else -> {
-				// In case the user cancels the process of selecting an image.
-			}
-		}
-}
+    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        when (it.resultCode) {
+            Activity.RESULT_OK -> {
+                val uri: Uri = it.data?.data!!
+                // Use the uri to load the image
+            }
+            ImagePicker.RESULT_ERROR -> {
+                val errorMessage = ImagePicker.getError(it.data)
+                // Process the error message, e.g. show a toast
+            }
+            else -> {
+                // In case the user cancels the process of selecting an image.
+            }
+        }
+    }
 ```
 
 2. Launch ImagePicker:
 
 ```kotlin
 ImagePicker
-	.with(this)
+    .with(this)
     .provider(ImageProvider.BOTH)
     .createIntentFromDialog { launcher.launch(it) }
 ```
@@ -92,20 +92,21 @@ ImagePicker
 
 ```java
 ActivityResultLauncher<Intent> launcher =
-	registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
-		if (result.getResultCode() == RESULT_OK) {
-			Uri uri = result.getData().getData();
-			// Use the uri to load the image
-		} else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
-			// Use ImagePicker.Companion.getError(result.getData()) to show an error
-		}
-	});
+    registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
+        if (result.getResultCode() == RESULT_OK) {
+            Uri uri = result.getData().getData();
+            // Use the uri to load the image
+        } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
+            // Use ImagePicker.Companion.getError(result.getData()) to show an error
+        }
+    });
 ```
 
 2. Launch ImagePicker:
 
 ```java
-ImagePicker.Companion.with(requireActivity())
+ImagePicker.Companion
+    .with(requireActivity())
     .provider(ImageProvider.BOTH)
     .createIntentFromDialog(it -> launcher.launch(it));
 ```
@@ -116,10 +117,10 @@ ImagePicker.Companion.with(requireActivity())
 
 ```kotlin
 ImagePicker
-	.with(this)
-	//...
-	.provider(ImageProvider.BOTH) //Or bothCameraGallery()
-	.createIntentFromDialog { launcher.launch(it) }
+    .with(this)
+    //...
+    .provider(ImageProvider.BOTH) //Or bothCameraGallery()
+    .createIntentFromDialog { launcher.launch(it) }
 ```
 
 - **Crop image:** `.crop()`
@@ -139,22 +140,22 @@ ImagePicker
 
 ```java
 ImagePicker.Companion
-	.with(this)
-	.crop()
-	.cropOval()
-	.maxResultSize(512,512,true)
-	.provider(ImageProvider.BOTH) //Or bothCameraGallery()
-	.createIntentFromDialog((Function1)(new Function1(){
-		public Object invoke(Object var1){
-			this.invoke((Intent)var1);
-			return Unit.INSTANCE;
+    .with(this)
+    .crop()
+    .cropOval()
+    .maxResultSize(512,512,true)
+    .provider(ImageProvider.BOTH) //Or bothCameraGallery()
+    .createIntentFromDialog((Function1)(new Function1(){
+        public Object invoke(Object var1){
+            this.invoke((Intent)var1);
+            return Unit.INSTANCE;
         }
 
-		public final void invoke(@NotNull Intent it){
-			Intrinsics.checkNotNullParameter(it,"it");
-			launcher.launch(it);
+        public final void invoke(@NotNull Intent it){
+            Intrinsics.checkNotNullParameter(it,"it");
+            launcher.launch(it);
         }
-	}));
+    }));
 ```
 
 **Let the user to resize crop bounds:**
@@ -168,35 +169,35 @@ ImagePicker.Companion
 
 ```kotlin
 ImagePicker
-	.with(this)
-	.setImageProviderInterceptor { imageProvider -> //Intercept ImageProvider
-		Log.d("ImagePicker", "Selected ImageProvider: "+imageProvider.name)
-	}
-	.createIntent()
+    .with(this)
+    .setImageProviderInterceptor { imageProvider -> //Intercept ImageProvider
+        Log.d("ImagePicker", "Selected ImageProvider: "+imageProvider.name)
+    }
+    .createIntent()
 ```
 
 **Intercept dialog dismiss event:**
 
 ```kotlin
 ImagePicker
-	.with(this)
-	.setDismissListener {
-		// Handle dismiss event
-		Log.d("ImagePicker", "onDismiss");
-	}
-	.createIntent()
+    .with(this)
+    .setDismissListener {
+        // Handle dismiss event
+        Log.d("ImagePicker", "onDismiss");
+    }
+    .createIntent()
 ```
 
 **Limit MIME types while choosing a gallery image:**
 
 ```kotlin
 .galleryMimeTypes(
-	//Exclude gif images
-	mimeTypes = arrayOf(
-		"image/png",
-		"image/jpg",
-		"image/jpeg"
-	)
+    //Exclude gif images
+    mimeTypes = arrayOf(
+        "image/png",
+        "image/jpg",
+        "image/jpeg"
+    )
 )
 ```
 
@@ -204,10 +205,10 @@ ImagePicker
 
 ```xml
 <resources>
-	<!-- Here you can add color of your choice  -->
-	<color name="ucrop_color_toolbar">@color/teal_500</color>
-	<color name="ucrop_color_statusbar">@color/teal_700</color>
-	<color name="ucrop_color_widget_active">@color/teal_500</color>
+    <!-- Here you can add color of your choice  -->
+    <color name="ucrop_color_toolbar">@color/teal_500</color>
+    <color name="ucrop_color_statusbar">@color/teal_700</color>
+    <color name="ucrop_color_widget_active">@color/teal_500</color>
 </resources>
 ```
 
