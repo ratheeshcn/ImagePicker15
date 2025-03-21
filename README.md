@@ -201,14 +201,31 @@ ImagePicker
 )
 ```
 
-**Add Following parameters in your **colors.xml** file, if you want to customize uCrop Activity:**
+**Add following parameters to your **colors.xml** file, if you want to customize the uCrop activity:**
 
 ```xml
 <resources>
-    <!-- Here you can add color of your choice  -->
-    <color name="ucrop_color_toolbar">@color/teal_500</color>
-    <color name="ucrop_color_statusbar">@color/teal_700</color>
-    <color name="ucrop_color_widget_active">@color/teal_500</color>
+    <!-- Here you can use your own colors to customize the crop view  -->
+    <!-- Background color of the top status bar -->
+    <color name="ucrop_color_toolbar">@color/ucrop_color_white</color>
+
+    <!-- Background color of the bottom widget bar -->
+    <color name="ucrop_color_widget_background">@color/ucrop_color_ebony_clay</color>
+
+    <!-- Background color behind the image to be cropped -->
+    <color name="ucrop_color_crop_background">@color/ucrop_color_black</color>
+
+    <!-- Color of the status bar title, including button icons -->
+    <color name="ucrop_color_toolbar_widget">@color/ucrop_color_black</color>
+
+    <!-- Color of the inactive (not selected) widgets -->
+    <color name="ucrop_color_inactive_controls_color">@color/ucrop_color_heather</color>
+
+    <!-- Color of the active (selected) widget: Including the text -->
+    <color name="ucrop_color_widget_active">@color/ucrop_color_white</color>
+
+    <!-- Color of the lines for the progress wheel (e.g. for zooming in) -->
+    <color name="ucrop_color_progress_wheel_line">@color/ucrop_color_ebony_clay</color>
 </resources>
 ```
 
