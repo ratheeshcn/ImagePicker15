@@ -1,0 +1,27 @@
+{
+  "changelog_type": "pull_request",
+  "header_prefix": "Version:",
+  "include_unlabeled_changes": true,
+  "group_config": [
+    {
+      "title": "Bug Fixes",
+      "labels": ["bug", "bugfix"]
+    },
+    {
+      "title": "Code Improvements",
+      "labels": ["refactoring"]
+    },
+    {
+      "title": "New Features",
+      "labels": ["enhancement"]
+    },
+    {
+      "title": "Documentation Updates",
+      "labels": ["docs", "documentation", "doc"]
+    },
+	{
+      "title": "Dependency Updates",
+      "labels": ["dependencies"]
+    }
+  ]
+}

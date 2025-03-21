@@ -6,6 +6,7 @@
     ":dependencyDashboard"
   ],
   "rebaseWhen": "behind-base-branch",
+  "labels": ["dependencies"],
   "packageRules": [
     {
       "description": "Use a specific registry URL for specific dependencies",
