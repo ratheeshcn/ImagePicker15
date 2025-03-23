@@ -1,0 +1,24 @@
+changelog:
+  exclude:
+    labels:
+      - changelog
+  categories:
+    - title: 👾 Features
+      labels:
+        - enhancement
+    - title: 🪲 Bug Fixes
+      labels:
+        - bug
+    - title: ✨ Improvements
+      labels:
+        - refactoring
+        - improvement
+    - title: 📚 Documentation
+      labels:
+        - documentation
+    - title: 🧩 Dependencies
+      labels:
+        - dependencies
+    - title: 🪅 Other Changes
+      labels:
+        - '*'
