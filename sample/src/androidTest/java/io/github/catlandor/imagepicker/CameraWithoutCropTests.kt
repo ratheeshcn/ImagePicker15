@@ -15,6 +15,7 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import io.github.catlandor.imagepicker.sample.MainActivity
 import io.github.catlandor.imagepicker.sample.R
+import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
@@ -32,6 +33,11 @@ class CameraWithoutCropTests {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
         Intents.init()
+    }
+
+    @After
+    fun tearDown() {
+        Intents.release()
     }
 
     @get:Rule
