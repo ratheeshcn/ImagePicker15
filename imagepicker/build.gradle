@@ -55,8 +55,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7'
     implementation 'androidx.fragment:fragment-ktx:1.8.6'
 
-    //More Info: https://github.com/jens-muenker/uCrop-n-Edit
-    implementation 'com.github.jens-muenker:uCrop-n-Edit:4.1.0'
+    // See GitHub repo: https://github.com/jens-muenker/uCrop-n-Edit
+    api 'com.github.jens-muenker:uCrop-n-Edit:4.1.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'

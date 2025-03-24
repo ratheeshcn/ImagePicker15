@@ -134,7 +134,23 @@ ImagePicker
 - **Limit MIME types:** `.galleryMimeTypes(mimeTypes = arrayOf("image/png", "image/jpg", "image/jpeg"))`
 - **Camera option only (without gallery):** `.cameraOnly()`
 - **Gallery option only (without camera):** `.galleryOnly()`
+- **User can freely choose the ratio of the cropped image:** `.cropFreeStyle()`
 
+**Use any of the uCrop options:**
+
+```kotlin
+ImagePicker
+    .with(this)
+    .withUCropOptions { options ->
+        options.withAspectRatio(1f, 1f)
+        options.setCircleDimmedLayer(true)
+        options.setCompressionQuality(10)
+        // Add more UCrop options as needed
+    }.provider(ImageProvider.BOTH)
+    .createIntentFromDialog { profileLauncher.launch(it) }
+```
+
+More options are described [here](https://github.com/jens-muenker/uCrop-n-Edit/blob/master/UCrop-Options.md).
 
 **Java sample for using `createIntentFromDialog`:**
 
@@ -156,13 +172,6 @@ ImagePicker.Companion
             launcher.launch(it);
         }
     }));
-```
-
-**Let the user to resize crop bounds:**
-
-```kotlin
-.crop()                                                  
-.cropFreeStyle()
 ```
 
 **Intercept ImageProvider; could be used for analytics purposes:**

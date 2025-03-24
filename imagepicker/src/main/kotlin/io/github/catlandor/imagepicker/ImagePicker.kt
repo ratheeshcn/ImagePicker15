@@ -5,10 +5,12 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import com.yalantis.ucrop.UCrop.Options
 import io.github.catlandor.imagepicker.constant.ImageProvider
 import io.github.catlandor.imagepicker.listener.DismissListener
 import io.github.catlandor.imagepicker.listener.ResultListener
 import io.github.catlandor.imagepicker.util.DialogHelper
+import io.github.catlandor.imagepicker.wrapper.UCropOptionsWrapper
 import java.io.File
 
 /**
@@ -27,14 +29,11 @@ open class ImagePicker {
         internal const val EXTRA_IMAGE_PROVIDER = "extra.image_provider"
         internal const val EXTRA_CROP = "extra.crop"
         internal const val MULTIPLE_FILES_ALLOWED = "extra.multiple"
-        internal const val EXTRA_CROP_X = "extra.crop_x"
-        internal const val EXTRA_CROP_Y = "extra.crop_y"
-        internal const val EXTRA_CROP_OVAL = "extra.crop_oval"
-        internal const val EXTRA_CROP_FREE_STYLE = "extra.crop_free_style"
         internal const val EXTRA_MAX_WIDTH = "extra.max_width"
         internal const val EXTRA_MAX_HEIGHT = "extra.max_height"
         internal const val EXTRA_KEEP_RATIO = "extra.keep_ratio"
         internal const val EXTRA_OUTPUT_FORMAT = "extra.output_format"
+        internal const val EXTRA_UCROP_OPTIONS = "extra.ucrop_options"
 
         internal const val EXTRA_ERROR = "extra.error"
         const val MULTIPLE_FILES_PATH = "extra.multiple_file_path"
@@ -99,13 +98,10 @@ open class ImagePicker {
         /*
          * Crop Parameters
          */
-        private var cropX: Float = 0f
-        private var cropY: Float = 0f
         private var crop: Boolean = false
-        private var cropOval: Boolean = false
-        private var cropFreeStyle: Boolean = false
         private var outputFormat: Bitmap.CompressFormat? = null
         private var isMultiple: Boolean = false
+        private var uCropOptions: Options = Options()
 
         /*
          * Resize Parameters
@@ -172,9 +168,9 @@ open class ImagePicker {
          * @param y aspect ratio Y
          */
         fun crop(x: Float, y: Float): Builder {
-            cropX = x
-            cropY = y
-            return crop()
+            this.crop = true
+            this.uCropOptions.withAspectRatio(x, y)
+            return this
         }
 
         /**
@@ -189,7 +185,9 @@ open class ImagePicker {
          * Allow dimmed layer to have a circle inside
          */
         fun cropOval(): Builder {
-            this.cropOval = true
+            this.crop = true
+            this.uCropOptions.withAspectRatio(1f, 1f)
+            this.uCropOptions.setCircleDimmedLayer(true)
             return this
         }
 
@@ -197,7 +195,8 @@ open class ImagePicker {
          * Let the user resize crop bounds
          */
         fun cropFreeStyle(): Builder {
-            this.cropFreeStyle = true
+            this.crop = true
+            this.uCropOptions.setFreeStyleCropEnabled(true)
             return this
         }
 
@@ -206,6 +205,15 @@ open class ImagePicker {
          *
          */
         fun cropSquare(): Builder = crop(1f, 1f)
+
+        /**
+         * Directly set any available uCrop option.
+         */
+        fun withUCropOptions(setUCropOptionsFunc: (Options) -> Unit): Builder {
+            this.crop = true
+            setUCropOptionsFunc(this.uCropOptions)
+            return this
+        }
 
         fun setMultipleAllowed(isMultiple: Boolean): Builder {
             this.isMultiple = isMultiple
@@ -261,9 +269,7 @@ open class ImagePicker {
         fun createIntent(): Intent =
             Intent(activity, ImagePickerActivity::class.java).apply { putExtras(getBundle()) }
 
-        fun createIntentFromDialog(
-            onResult: (Intent) -> Unit
-        ) {
+        fun createIntentFromDialog(onResult: (Intent) -> Unit) {
             if (imageProvider == ImageProvider.BOTH) {
                 DialogHelper.showChooseAppDialog(
                     context = activity,
@@ -290,12 +296,11 @@ open class ImagePicker {
                 putSerializable(EXTRA_IMAGE_PROVIDER, imageProvider)
                 putStringArray(EXTRA_MIME_TYPES, mimeTypes)
 
-                putBoolean(EXTRA_CROP_OVAL, cropOval)
-                putBoolean(EXTRA_CROP_FREE_STYLE, cropFreeStyle)
+                putParcelable(EXTRA_UCROP_OPTIONS, UCropOptionsWrapper(uCropOptions))
+
                 putBoolean(EXTRA_CROP, crop)
                 putBoolean(MULTIPLE_FILES_ALLOWED, isMultiple)
-                putFloat(EXTRA_CROP_X, cropX)
-                putFloat(EXTRA_CROP_Y, cropY)
+
                 putSerializable(EXTRA_OUTPUT_FORMAT, outputFormat)
 
                 putInt(EXTRA_MAX_WIDTH, maxWidth)
