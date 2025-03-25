@@ -14,6 +14,7 @@ import io.github.catlandor.imagepicker.R
 import io.github.catlandor.imagepicker.util.FileUriUtils
 import io.github.catlandor.imagepicker.util.FileUtil.getCompressFormat
 import io.github.catlandor.imagepicker.util.ImageUtil
+import io.github.catlandor.imagepicker.wrapper.UCropOptionsWrapper
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -36,12 +37,10 @@ class CropProvider(activity: ImagePickerActivity, private val launcher: (Intent)
     private val maxWidth: Int
     private val maxHeight: Int
 
-    private val cropOval: Boolean
-    private val cropFreeStyle: Boolean
+    private val uCropBundle: Bundle?
     private val crop: Boolean
-    private val cropAspectX: Float
-    private val cropAspectY: Float
     private val outputFormat: Bitmap.CompressFormat?
+    private val uCropOptions: UCropOptionsWrapper?
 
     private var cropImageUri: Uri? = null
 
@@ -50,12 +49,11 @@ class CropProvider(activity: ImagePickerActivity, private val launcher: (Intent)
             maxWidth = getInt(ImagePicker.EXTRA_MAX_WIDTH, 0)
             maxHeight = getInt(ImagePicker.EXTRA_MAX_HEIGHT, 0)
             crop = getBoolean(ImagePicker.EXTRA_CROP, false)
-            cropOval = getBoolean(ImagePicker.EXTRA_CROP_OVAL, false)
-            cropFreeStyle = getBoolean(ImagePicker.EXTRA_CROP_FREE_STYLE, false)
-            cropAspectX = getFloat(ImagePicker.EXTRA_CROP_X, 0f)
-            cropAspectY = getFloat(ImagePicker.EXTRA_CROP_Y, 0f)
             @Suppress("DEPRECATION")
             outputFormat = this.get(ImagePicker.EXTRA_OUTPUT_FORMAT) as? Bitmap.CompressFormat
+            uCropOptions = getParcelable(ImagePicker.EXTRA_UCROP_OPTIONS)
+
+            uCropBundle = activity.intent.extras
         }
     }
 
@@ -82,18 +80,6 @@ class CropProvider(activity: ImagePickerActivity, private val launcher: (Intent)
     }
 
     /**
-     * Check if it is allow dimmed layer to have a circle inside or not
-     *
-     * @return Boolean. True if it is allow dimmed layer to have a circle inside else false.
-     */
-    fun isCropOvalEnabled() = cropOval
-
-    /**
-     * Set to true to let user resize crop bounds (disabled by default)
-     */
-    fun isCropFreeStyleEnabled() = cropFreeStyle
-
-    /**
      * Check if crop should be enabled or not
      *
      * @return Boolean. True if Crop should be enabled else false.
@@ -113,8 +99,6 @@ class CropProvider(activity: ImagePickerActivity, private val launcher: (Intent)
     @Throws(IOException::class)
     fun startIntent(
         uri: Uri,
-        cropOval: Boolean,
-        cropFreeStyle: Boolean,
         isCamera: Boolean,
         isMultipleFiles: Boolean,
         outputFormat: Bitmap.CompressFormat?
@@ -122,8 +106,6 @@ class CropProvider(activity: ImagePickerActivity, private val launcher: (Intent)
         this.isMultipleFiles = isMultipleFiles
         cropImage(
             uri = uri,
-            cropOval = cropOval,
-            cropFreeStyle = cropFreeStyle,
             isCamera = isCamera,
             outputFormat = outputFormat
         )
@@ -136,8 +118,6 @@ class CropProvider(activity: ImagePickerActivity, private val launcher: (Intent)
     @Throws(IOException::class)
     private fun cropImage(
         uri: Uri,
-        cropOval: Boolean,
-        cropFreeStyle: Boolean,
         isCamera: Boolean,
         outputFormat: Bitmap.CompressFormat?
     ) {
@@ -170,18 +150,12 @@ class CropProvider(activity: ImagePickerActivity, private val launcher: (Intent)
                     System.currentTimeMillis().toString() + "_croppedImg" + extension
                 )
 
-            val options = UCrop.Options()
+            val options = uCropOptions?.options ?: UCrop.Options()
             options.setCompressionFormat(getCompressFormat(extension))
-            options.setCircleDimmedLayer(cropOval)
-            options.setFreeStyleCropEnabled(cropFreeStyle)
             val uCrop =
                 UCrop
                     .of(Uri.fromFile(selectedImgFile), Uri.fromFile(croppedImgFile))
                     .withOptions(options)
-
-            if (cropAspectX > 0 && cropAspectY > 0) {
-                uCrop.withAspectRatio(cropAspectX, cropAspectY)
-            }
 
             if (maxWidth > 0 && maxHeight > 0) {
                 uCrop.withMaxResultSize(maxWidth, maxHeight)

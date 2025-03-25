@@ -139,7 +139,6 @@ class MainActivity : AppCompatActivity() {
     private fun pickProfileImage() {
         ImagePicker
             .with(this)
-            .crop()
             .cropOval()
             .maxResultSize(512, 512, true)
             .provider(ImageProvider.BOTH) // Or bothCameraGallery()
@@ -172,7 +171,7 @@ class MainActivity : AppCompatActivity() {
         cameraLauncher.launch(
             ImagePicker
                 .with(this)
-                .crop()
+                .crop(16f, 9f)
                 .cameraOnly()
                 .maxResultSize(1080, 1920, keepRatio = true)
                 .createIntent()

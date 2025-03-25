@@ -168,8 +168,6 @@ class ImagePickerActivity : AppCompatActivity() {
             mCropProvider.isCropEnabled() ->
                 mCropProvider.startIntent(
                     uri = uri,
-                    cropOval = mCropProvider.isCropOvalEnabled(),
-                    cropFreeStyle = mCropProvider.isCropFreeStyleEnabled(),
                     isCamera = isCamera,
                     isMultipleFiles = false,
                     outputFormat = mCropProvider.outputFormat()
@@ -205,8 +203,6 @@ class ImagePickerActivity : AppCompatActivity() {
             mCropProvider.isCropEnabled() ->
                 mCropProvider.startIntent(
                     uri = uri,
-                    cropOval = mCropProvider.isCropOvalEnabled(),
-                    cropFreeStyle = mCropProvider.isCropFreeStyleEnabled(),
                     isCamera = false,
                     isMultipleFiles = true,
                     outputFormat = mCropProvider.outputFormat()
