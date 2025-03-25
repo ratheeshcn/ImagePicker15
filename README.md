@@ -126,15 +126,14 @@ ImagePicker
 - **Crop image:** `.crop()`
 - **Crop image with 16:9 aspect ratio:** `.crop(16f, 9f)`
 - **Crop square image:** `.cropSquare()`
-- **Oval crop image:** `.crop().cropOval()`
+- **Oval crop image:** `.cropOval()`
 - **Resize image: Set max width and height of final image:** `.maxResultSize(512, 512, keepRatio = true)`
-- **Let the user resize crop bounds:** `.crop().cropFreeStyle()`
 - **Allow multiple file selection:** `.setMultipleAllowed(true)`
 - **Set output format:** `.setOutputFormat(Bitmap.CompressFormat.WEBP)`
 - **Limit MIME types:** `.galleryMimeTypes(mimeTypes = arrayOf("image/png", "image/jpg", "image/jpeg"))`
 - **Camera option only (without gallery):** `.cameraOnly()`
 - **Gallery option only (without camera):** `.galleryOnly()`
-- **User can freely choose the ratio of the cropped image:** `.cropFreeStyle()`
+- **Let the user freely choose the ratio of the cropped image:** `.cropFreeStyle()`
 
 **Use any of the uCrop options:**
 
@@ -157,7 +156,6 @@ More options are described [here](https://github.com/jens-muenker/uCrop-n-Edit/b
 ```java
 ImagePicker.Companion
     .with(this)
-    .crop()
     .cropOval()
     .maxResultSize(512,512,true)
     .provider(ImageProvider.BOTH) //Or bothCameraGallery()
