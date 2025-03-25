@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+<a id="2.5.0"></a>
+# [2.5.0](https://github.com/Catlandor/ImagePicker/releases/tag/2.5.0) - 2025-03-25
+
+<!-- Release notes generated using configuration in .github/release.yml at master -->
+
+## What's Changed
+### 👾 Features
+* Enhance ImagePicker options with 'withUCropOptions' by [@Catlandor](https://github.com/Catlandor) in [#31](https://github.com/Catlandor/ImagePicker/pull/31)
+### 📚 Documentation
+* Update README, add changelog generator by [@Catlandor](https://github.com/Catlandor) in [#23](https://github.com/Catlandor/ImagePicker/pull/23)
+* README indention fix by [@Catlandor](https://github.com/Catlandor) in [#24](https://github.com/Catlandor/ImagePicker/pull/24)
+* Update README.md: Improve the documentation for uCrop customizations by [@Catlandor](https://github.com/Catlandor) in [#25](https://github.com/Catlandor/ImagePicker/pull/25)
+* Replace CHANGELOG.md generator by [@Catlandor](https://github.com/Catlandor) in [#26](https://github.com/Catlandor/ImagePicker/pull/26)
+### 🧩 Dependencies
+* Update non-major packages to v2.1.20 by [@renovate](https://github.com/renovate) in [#22](https://github.com/Catlandor/ImagePicker/pull/22)
+* Update dependency com.android.tools.build:gradle to v8.9.1 by [@renovate](https://github.com/renovate) in [#29](https://github.com/Catlandor/ImagePicker/pull/29)
+### 🪅 Other Changes
+* Add CODEOWNERS file for the workflow folder by [@Catlandor](https://github.com/Catlandor) in [#30](https://github.com/Catlandor/ImagePicker/pull/30)
+
+## New Contributors
+* [@github-actions](https://github.com/github-actions) made their first contribution in [#28](https://github.com/Catlandor/ImagePicker/pull/28)
+
+**Full Changelog**: https://github.com/Catlandor/ImagePicker/compare/2.4.1...2.5.0
+
+[Changes][2.5.0]
+
+
 <a id="2.4.1"></a>
 # [2.4.1](https://github.com/Catlandor/ImagePicker/releases/tag/2.4.1) - 2025-03-19
 
@@ -60,6 +87,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 [Changes][2.3.23]
 
 
+[2.5.0]: https://github.com/Catlandor/ImagePicker/compare/2.4.1...2.5.0
 [2.4.1]: https://github.com/Catlandor/ImagePicker/compare/2.4.0...2.4.1
 [2.4.0]: https://github.com/Catlandor/ImagePicker/compare/2.3.23...2.4.0
 [2.3.23]: https://github.com/Catlandor/ImagePicker/tree/2.3.23
