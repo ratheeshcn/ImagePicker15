@@ -1,14 +1,10 @@
 package io.github.catlandor.imagepicker
 
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
-import androidx.test.runner.lifecycle.Stage
+import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObjectNotFoundException
 import androidx.test.uiautomator.UiSelector
-import org.junit.rules.TestRule
-import org.junit.runner.Description
-import org.junit.runners.model.Statement
+import androidx.test.uiautomator.Until
 
 object TestUtils {
     const val CAMERA_BUTTON_SHUTTER = "com.android.camera2:id/shutter_button"
@@ -34,29 +30,48 @@ object TestUtils {
     }
 
     /**
-     * This rule will allow the tests to run even if the device's screen is off or locked.
-     * Allows a developer to fire and forget running the UI Test across different devices or on the CI
-     * emulator.
+     * This method is used to click the 'Allow' button in the permission dialog.
+     * It is called when the camera location permission dialog appears.
+     * ('Allow camera to access this device's location?')
+     * The method checks for the presence of the dialog and clicks the 'Allow' button if found.
+     * If the dialog is not found, it does nothing.
+     *
+     * @param device The UiDevice instance used to interact with the UI.
+     * @param threadTimeout The timeout duration for waiting for the dialog to appear.
+     * @param openCameraFunc A lambda function to open the camera.
      */
-    class RunWhenScreenOffOrLockedRule : TestRule {
-        override fun apply(base: Statement, description: Description): Statement =
-            object : Statement() {
-                override fun evaluate() {
-                    // Turn screen on
-                    UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).wakeUp()
+    fun tryClickCameraLocationAllowButton(
+        device: UiDevice,
+        threadTimeout: Long,
+        openCameraFunc: () -> Unit
+    ) {
+        val resourceNameAllowButton =
+            "com.android.packageinstaller:id/permission_allow_button"
+        val objectExists =
+            device.wait(Until.hasObject(By.res(resourceNameAllowButton)), threadTimeout)
+        if (!objectExists) {
+            return
+        }
 
-                    // Allow any activity to run when locked
-                    ActivityLifecycleMonitorRegistry
-                        .getInstance()
-                        .addLifecycleCallback { activity, stage ->
-                            if (stage === Stage.PRE_ON_CREATE) {
-                                activity.setShowWhenLocked(true)
-                            }
-                        }
+        device
+            // for denying: permission_deny_button
+            .findObject(By.res(resourceNameAllowButton))
+            ?.click()
 
-                    // Continue with other statements
-                    base.evaluate()
-                }
-            }
+        device.wait(
+            Until.hasObject(By.textContains("Next")),
+            threadTimeout
+        )
+
+        // Since a really annoying additional question appears ('Remember photo location?') and
+        // afterwards the camera forgets the context it was opened from, we instead just return
+        // to the app and click the 'add image for tea' button again.
+        // This time, the permission is already granted and the camera opens directly.
+        // Alternatively, it could be possible to find the 'Next' button like this
+        // device.findObject(UiSelector().textContains("Next"))
+        // (yet the problem still persists that the camera forgets the context)
+        device.pressBack()
+
+        openCameraFunc()
     }
 }

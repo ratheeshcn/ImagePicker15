@@ -56,15 +56,26 @@ class CameraAndGalleryPickerTests {
     @get:Rule
     var activityScenarioRule = activityScenarioRule<MainActivity>()
 
-    @get:Rule
-    val screenLockRule = TestUtils.RunWhenScreenOffOrLockedRule()
-
     @Test
     fun addProfileImage_PhotoOption_PhotoAdded() {
         onView(withId(R.id.fab_add_photo)).perform(click())
 
         // Now click on the button in your app that launches the camera.
         onView(withId(R.id.lytCameraPick)).perform(click())
+
+        TestUtils.tryClickCameraLocationAllowButton(
+            device,
+            threadTimeout,
+            openCameraFunc = {
+                device.wait(
+                    Until.hasObject(By.displayId(R.id.fab_add_photo)),
+                    threadTimeout
+                )
+
+                onView(withId(R.id.fab_add_photo)).perform(click())
+                onView(withId(R.id.lytCameraPick)).perform(click())
+            }
+        )
 
         val cameraButtons =
             arrayOf<String?>(TestUtils.CAMERA_BUTTON_SHUTTER, TestUtils.CAMERA_BUTTON_DONE)
@@ -103,7 +114,7 @@ class CameraAndGalleryPickerTests {
     private fun mockMediaSelection(context: Context) {
         val assetManager = InstrumentationRegistry.getInstrumentation().context
         val inputStream = assetManager.assets.open("TestImage.png")
-        val tempFile = File(context.getExternalFilesDir(null), "temp_image.png")
+        val tempFile = File(context.filesDir, "temp_image.png")
         val outputStream = FileOutputStream(tempFile)
 
         inputStream.use { input ->
