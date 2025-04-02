@@ -55,6 +55,22 @@ class CameraWithoutCropTests {
             )
         }
 
+        TestUtils.tryClickCameraLocationAllowButton(
+            device,
+            threadTimeout,
+            openCameraFunc = {
+                activityScenarioRule.scenario.onActivity { activity: MainActivity ->
+                    activity.cameraLauncher.launch(
+                        ImagePicker
+                            .with(activity)
+                            .cameraOnly()
+                            .maxResultSize(1080, 1920, true)
+                            .createIntent()
+                    )
+                }
+            }
+        )
+
         val cameraButtons =
             arrayOf<String?>(TestUtils.CAMERA_BUTTON_SHUTTER, TestUtils.CAMERA_BUTTON_DONE)
 

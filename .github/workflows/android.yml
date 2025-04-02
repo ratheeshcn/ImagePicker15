@@ -81,13 +81,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: gradle
-        
-    - name: ccache
-      uses: hendrikmuhs/ccache-action@v1
-      with:
-          key: ${{ runner.os }}-${{ github.sha }}
-          restore-keys: ${{ runner.os }}
-          save: false
 
     - name: Enable KVM
       run: |
@@ -98,21 +91,28 @@ jobs:
     - name: Gradle cache
       uses: gradle/actions/setup-gradle@v4
 
-    - name: run tests
+    - name: create AVD and generate snapshot for caching
       if: steps.avd-cache.outputs.cache-hit != 'true'
-      uses: reactivecircus/android-emulator-runner@b683a061eaff4aac4d0b585bfd0cf714a40aee93
+      uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: ${{ matrix.api-level }}
         arch: ${{ matrix.arch }}
         target: ${{ matrix.target }}
-        script: |
-           rm -rf $ANDROID_HOME/cmake
-           ccache -o cache_dir=${{ github.workspace }}/.ccache
-           ccache -o hash_dir=false
-           ccache -o compiler_check='%compiler% -dumpmachine; %compiler% -dumpversion'
-           ./gradlew connectedAndroidTest
+        force-avd-creation: false
+        emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated
+        disable-animations: false
+        script: echo "Generated AVD snapshot for caching."
+
+    - name: run tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: ${{ matrix.api-level }}
+        arch: ${{ matrix.arch }}
+        target: ${{ matrix.target }}
+        force-avd-creation: false
         emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated
         disable-animations: true
+        script: ./gradlew connectedAndroidTest
         avd-name: ${{ matrix.api-level }}_${{ matrix.arch }}
 
     - name: Upload Instrumentation Test report
