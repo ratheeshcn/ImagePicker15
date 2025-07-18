@@ -1,4 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
 import com.vanniktech.maven.publish.AndroidMultiVariantLibrary
 
 plugins {
@@ -69,8 +68,7 @@ mavenPublishing {
     // the second whether to publish a javadoc jar
     configure(new AndroidMultiVariantLibrary(true, true))
 
-    // when publishing to https://central.sonatype.com/
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral(true)
 
     signAllPublications()
 
